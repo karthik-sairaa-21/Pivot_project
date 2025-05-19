@@ -38,26 +38,35 @@ const App = () => {
       <CSVUploader setParsedData={setParsedData} setHeaders={setHeaders} />
       <h3 className="file-upload-container label">CSV Data Preview</h3>
       <div className="preview-table">
-        {parsedData.length > 0 && (
-          <table>
-            <thead>
-              <tr>
-                {headers.map((h) => (
-                  <th key={h}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {parsedData.map((row, i) => (
-                <tr key={i}>
-                  {headers.map((h) => (
-                    <td key={h}>{row[h]}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+      {parsedData.length > 0 && (
+  <table>
+    <thead>
+      <tr>
+        {headers
+          .filter(
+            (h) => !selectedFields.val.some((valObj) => valObj.field === h)
+          )
+          .map((h) => (
+            <th key={h}>{h}</th>
+          ))}
+      </tr>
+    </thead>
+    <tbody>
+      {parsedData.map((row, i) => (
+        <tr key={i}>
+          {headers
+            .filter(
+              (h) => !selectedFields.val.some((valObj) => valObj.field === h)
+            )
+            .map((h) => (
+              <td key={h}>{row[h]}</td>
+            ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+)}
+
       </div>
 
       <h3>Fields</h3>
